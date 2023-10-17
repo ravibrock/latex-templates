@@ -1,0 +1,61 @@
+% Template for typesetting my math homework at UWaterloo
+% Based on https://github.com/francois-rozet/sleek-template, among other things
+\ProvidesPackage{homework}[2023/10/17 Ravi Brock's Homework]
+
+% Packages without options
+\RequirePackage{amsmath,amssymb,amstext,amsthm}
+\RequirePackage{comment}
+\RequirePackage{enumerate}
+\RequirePackage{fancybox,fancyhdr}
+\RequirePackage{graphicx}
+\RequirePackage{mathabx}
+\RequirePackage{multicol}
+\RequirePackage{pictexwd}
+\RequirePackage{rotating}
+\RequirePackage{titlesec}
+\RequirePackage{thmtools}
+\RequirePackage{tocloft}
+\RequirePackage{xcolor}
+
+% Packages with options
+\RequirePackage[nomessages]{fp}
+\RequirePackage[margin=0.75in]{geometry}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[framemethod=TikZ]{mdframed}
+
+% Sources my custom packages
+\RequirePackage{body}
+\RequirePackage{title}
+
+% Additional config that doesn't require its own file
+\allowdisplaybreaks % Break equations across pages
+
+\newcommand{\Lim}[1]{\raisebox{0.5ex}{\scalebox{0.8}{$\displaystyle \lim_{#1}\;$}}} % Better limits
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)} % Better modulo
+
+% More compact implies arrows
+\renewcommand*{\implies}{\Rightarrow}
+\renewcommand*{\impliedby}{\Leftarrow}
+\renewcommand*{\iff}{\Leftrightarrow}
+
+% Adjusts section styling
+\renewcommand*{\thesection}{\arabic{section}}
+
+% Table of contents
+\hypersetup{linktocpage}
+\setcounter{tocdepth}{0}
+\setlength{\cftchapnumwidth}{0pt}
+\renewcommand{\cftchappresnum}{\chaptername\ }
+\renewcommand{\cftchapaftersnum}{}
+\renewcommand{\cftchapaftersnumb}{\newline}
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+\newcommand*{\romantableofcontents}{
+    \hfuzz 1000pt % Disable overfull hbox error
+    \newpage
+    \pagenumbering{roman}
+    \tableofcontents
+    \newpage
+    \pagenumbering{arabic}
+    \hfuzz 0pt % Re-enable overfull hbox error
+}

@@ -1,0 +1,127 @@
+% Declares package
+\ProvidesPackage{body}
+
+%%%%%%%%%%
+% Titles %
+%%%%%%%%%%
+
+\def\lgtheorem{Theorem}
+\def\lgproof{Proof}
+\def\lglemma{Lemma}
+\def\lgproposition{Proposition}
+\def\lgdefinition{Definition}
+\def\lgdesc{Description}
+\def\lghypothesis{Hypothesis}
+\def\lgmethod{Method}
+\def\lgproblem{Problem}
+\def\lganswer{Answer}
+\def\lgexample{Example}
+\def\lgremark{Remark}
+\def\lgnote{Note}
+\def\lgtip{Tip}
+\def\lghint{Hint}
+
+\ProcessOptions\relax
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Margins, chapters, and spacing %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\titleformat{\chapter}[display]
+{\bfseries\Huge} % format
+{\chaptertitlename\ \thechapter} % label
+{0ex}{
+    \Large
+    \textit
+}{\vspace{0ex}}
+
+\titlespacing*{\chapter}
+{0pt}{-30pt}{30pt}
+
+%%%%%%%%%%%%
+% Commands %
+%%%%%%%%%%%%
+
+\newcommand{\ds}{\displaystyle}
+\newcommand{\add}[1]{{\color{blue} #1}}
+\newcommand{\alert}[1]{{\color{red} #1}}
+\newcommand{\pnt}[1]{\textbf{[#1]}}
+\newcommand{\q}{\pnt{5} }
+\renewcommand{\qedsymbol}{$\blacksquare$} % Q.E.D. symbol
+
+\def\R{{\mathbb R}}
+\def\Z{{\mathbb Z}}
+\def\N{{\mathbb N}}
+\def\Q{{\mathbb Q}}
+\def\C{{\mathbb C}}
+\def\F{{\mathbb F}}
+\def\id{{\rm id}}
+\def\im{{\rm im}}
+\def\lcm{{\rm lcm}}
+
+\define@key{thmdef}{mdthm}[{}]{
+    \thmt@trytwice{\def\thmt@theoremdefiner{\mdtheorem[#1]}}{}
+}
+
+%%%%%%%%%%%%%%%%
+% Environments %
+%%%%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{theorem}{\lgtheorem}
+\newtheorem{lemma}[theorem]{\lglemma}
+\newtheorem{proposition}[theorem]{\lgproposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}{\lgdefinition}
+\newtheorem{desc}{\lgdesc}
+\newtheorem{hypothesis}{\lghypothesis}
+\newtheorem{method}{\lgmethod}
+\newtheorem{problem}{\lgproblem}[section]
+\newtheorem{hint}{\lghint}
+
+\let\proof\relax % overwrite proof environment
+\let\endproof\relax
+
+\theoremstyle{remark}
+\newtheorem{proof}{\lgproof}[theorem]
+\newtheorem{answer}{\lganswer}[problem]
+\newtheorem{example}{\lgexample}
+\newtheorem*{remark}{\lgremark}
+\newtheorem*{note}{\lgnote}
+\newtheorem*{tip}{\lgtip}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Framed environments %
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\mdfdefinestyle{thicc}{
+    innerleftmargin=0.5em,
+    innerrightmargin=0.5em,
+    innerbottommargin=1ex,
+    innertopmargin=1ex,
+    everyline=true,
+    linewidth=0.25em,
+    roundcorner=0.15em,
+    theoremseparator={.},
+    splittopskip=\baselineskip
+}
+
+\declaretheorem[mdthm={style=thicc, linecolor=black!20, frametitlebackgroundcolor=black!20}, sibling=desc, name=\lgdesc]{fmd-desc}
+\declaretheorem[mdthm={style=thicc, linecolor=brown!20, frametitlebackgroundcolor=brown!20}, sibling=definition, name=\lgdefinition]{fmd-definition}
+\declaretheorem[mdthm={style=thicc, linecolor=cyan!20, frametitlebackgroundcolor=cyan!20}, sibling=hint, name=\lghint]{fmd-hint}
+
+\declaretheorem[mdthm={style=thicc, linecolor=red!20, frametitlebackgroundcolor=red!20}, sibling=problem, name=\lgproblem]{fmd-problem}
+
+\declaretheorem[mdthm={style=thicc, linecolor=blue!20, frametitlebackgroundcolor=blue!20}, sibling=theorem, name=\lgtheorem]{fmd-theorem}
+\declaretheorem[mdthm={style=thicc, linecolor=blue!20, frametitlebackgroundcolor=blue!20}, sibling=lemma, name=\lglemma]{fmd-lemma}
+
+\declaretheorem[mdthm={style=thicc, linecolor=orange!20, frametitlebackgroundcolor=orange!20}, sibling=hypothesis, name=\lghypothesis]{fmd-hypothesis}
+\declaretheorem[mdthm={style=thicc, linecolor=orange!20, frametitlebackgroundcolor=orange!20}, sibling=proposition, name=\lgproposition]{fmd-proposition}
+
+\declaretheorem[mdthm={style=thicc, linecolor=black!20!green!20, frametitlebackgroundcolor=black!20!green!20}, sibling=proof, name=\lgproof]{fmd-proof}
+\declaretheorem[mdthm={style=thicc, linecolor=black!20!green!20, frametitlebackgroundcolor=black!20!green!20}, name=\lgmethod]{fmd-method}
+\declaretheorem[mdthm={style=thicc, linecolor=black!20!green!20, frametitlebackgroundcolor=black!20!green!20}, sibling=answer, name=\lganswer]{fmd-answer}
+\declaretheorem[mdthm={style=thicc, linecolor=black!20!green!20, frametitlebackgroundcolor=black!20!green!20}, sibling=example, name=\lgexample]{fmd-example}
+
+\endinput
