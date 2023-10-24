@@ -2,16 +2,15 @@
 % Based on https://github.com/francois-rozet/sleek-template, among other things
 \ProvidesPackage{homework}[2023/10/17 Ravi Brock's Homework]
 
+%%%%%%%%%%%%%%%%%%%%
+% Sources packages %
+%%%%%%%%%%%%%%%%%%%%
+
 % Packages without options
 \RequirePackage{amsmath,amssymb,amstext,amsthm}
-\RequirePackage{comment}
+\RequirePackage{cntperchap}
 \RequirePackage{enumerate}
-\RequirePackage{fancybox,fancyhdr}
-\RequirePackage{graphicx}
 \RequirePackage{mathabx}
-\RequirePackage{multicol}
-\RequirePackage{pictexwd}
-\RequirePackage{rotating}
 \RequirePackage{titlesec}
 \RequirePackage{thmtools}
 \RequirePackage{tocloft}
@@ -22,27 +21,48 @@
 \RequirePackage[margin=0.75in]{geometry}
 \RequirePackage[hidelinks]{hyperref}
 \RequirePackage[utf8]{inputenc}
-\RequirePackage[framemethod=TikZ]{mdframed}
+\RequirePackage[most]{tcolorbox}
 
-% Sources my custom packages
+% Custom packages
 \RequirePackage{body}
 \RequirePackage{title}
 
-% Additional config that doesn't require its own file
-\allowdisplaybreaks % Break equations across pages
+%%%%%%%%%%%%
+% Commands %
+%%%%%%%%%%%%
 
-\newcommand{\Lim}[1]{\raisebox{0.5ex}{\scalebox{0.8}{$\displaystyle \lim_{#1}\;$}}} % Better limits
-\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)} % Better modulo
+% Miscellaneous
+\newcommand{\ds}{\displaystyle}
+\renewcommand{\qedsymbol}{$\blacksquare$}
 
-% More compact implies arrows
+% Change imply arrow styling (optional)
 \renewcommand*{\implies}{\Rightarrow}
 \renewcommand*{\impliedby}{\Leftarrow}
-\renewcommand*{\iff}{\Leftrightarrow}
+% \renewcommand*{\iff}{\Leftrightarrow}
 
-% Adjusts section styling
-\renewcommand*{\thesection}{\arabic{section}}
+% Limits and modulo
+\newcommand{\Lim}[1]{\raisebox{0.5ex}{\scalebox{0.8}{$\displaystyle \lim_{#1}\;$}}}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
 
-% Table of contents
+% Blackboard bold
+\def\R{{\mathbb R}}
+\def\Z{{\mathbb Z}}
+\def\N{{\mathbb N}}
+\def\Q{{\mathbb Q}}
+\def\C{{\mathbb C}}
+\def\F{{\mathbb F}}
+
+% Plaintext abbreviations in equations
+\def\id{{\rm id}}
+\def\im{{\rm im}}
+\def\lcm{{\rm lcm}}
+\def\ev{{\rm ev}}
+\def\char{{\rm char}}
+
+%%%%%%%%%%%%%%%%%%%%%
+% Table of contents %
+%%%%%%%%%%%%%%%%%%%%%
+
 \hypersetup{linktocpage}
 \setcounter{tocdepth}{0}
 \setlength{\cftchapnumwidth}{0pt}
@@ -59,3 +79,24 @@
     \pagenumbering{arabic}
     \hfuzz 0pt % Re-enable overfull hbox error
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Miscellaneous config %
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\titleformat{\chapter}[display]
+{\bfseries\Huge} % format
+{\chaptertitlename\ \thechapter} % label
+{0ex}{
+    \Large
+    \textit
+}{\vspace{0ex}}
+
+\titlespacing*{\chapter}
+{0pt}{-30pt}{30pt}
+
+% Break equations across pages
+\allowdisplaybreaks
+
+% Adjusts section styling
+\renewcommand*{\thesection}{\arabic{section}}

@@ -1,9 +1,30 @@
-% Declares package
 \ProvidesPackage{body}
 
-%%%%%%%%%%
-% Titles %
-%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Creates counters for sections and problems %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{sectionctr}[section]
+\newcounter{pblmctr}[section]
+\RegisterCounter[tracklevel=section]{pblmctr}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formats environment numbering appropriately %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\secalph[1]{%
+    \ifnumless{\value{pblmctr}}{1}
+    {\thesection}%
+    {%
+        \GetStoredCounterValue{pblmctr}\ifnumgreater{\value{cps@@tempcounterstorage}}{2}%
+        {\thesection\alph{#1}}%
+        {\thesection}
+    }
+}
+
+%%%%%%%%%%%%%%%%%%%%%
+% Environment names %
+%%%%%%%%%%%%%%%%%%%%%
 
 \def\lgtheorem{Theorem}
 \def\lgproof{Proof}
@@ -21,107 +42,135 @@
 \def\lgtip{Tip}
 \def\lghint{Hint}
 
-\ProcessOptions\relax
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Defines theorem styles %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Margins, chapters, and spacing %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheoremstyle{plain-cm}
+  {\topsep}                                  % ABOVESPACE
+  {\topsep}                                  % BELOWSPACE
+  {\itshape}                                 % BODYFONT
+  {0pt}                                      % INDENT
+  {\bfseries}                                % HEADFONT
+  {}                                         % HEADPUNCT
+  {5pt plus 1pt minus 1pt}                   % HEADSPACE
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ #3}} % CUSTOM-HEAD-SPEC
 
-\titleformat{\chapter}[display]
-{\bfseries\Huge} % format
-{\chaptertitlename\ \thechapter} % label
-{0ex}{
-    \Large
-    \textit
-}{\vspace{0ex}}
+\newtheoremstyle{definition-cm}
+  {\topsep}
+  {\topsep}
+  {}
+  {0pt}
+  {\bfseries}
+  {}
+  {5pt plus 1pt minus 1pt}
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ #3}}
 
-\titlespacing*{\chapter}
-{0pt}{-30pt}{30pt}
+\newtheoremstyle{remark-cm}
+  {\topsep}
+  {\topsep}
+  {}
+  {0pt}
+  {\itshape}
+  {}
+  {5pt plus 1pt minus 1pt}
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ #3}}
 
-%%%%%%%%%%%%
-% Commands %
-%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Defines unboxed theorems %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\ds}{\displaystyle}
-\newcommand{\add}[1]{{\color{blue} #1}}
-\newcommand{\alert}[1]{{\color{red} #1}}
-\newcommand{\pnt}[1]{\textbf{[#1]}}
-\newcommand{\q}{\pnt{5} }
-\renewcommand{\qedsymbol}{$\blacksquare$} % Q.E.D. symbol
+\theoremstyle{plain-cm}
+\newtheorem{theorem}[sectionctr]{\lgtheorem}\renewcommand*{\thetheorem}{\secalph{theorem}}
+\newtheorem{lemma}[sectionctr]{\lglemma}\renewcommand*{\thelemma}{\secalph{lemma}}
+\newtheorem{proposition}[sectionctr]{\lgproposition}\renewcommand*{\theproposition}{\secalph{proposition}}
 
-\def\R{{\mathbb R}}
-\def\Z{{\mathbb Z}}
-\def\N{{\mathbb N}}
-\def\Q{{\mathbb Q}}
-\def\C{{\mathbb C}}
-\def\F{{\mathbb F}}
-\def\id{{\rm id}}
-\def\im{{\rm im}}
-\def\lcm{{\rm lcm}}
-
-\define@key{thmdef}{mdthm}[{}]{
-    \thmt@trytwice{\def\thmt@theoremdefiner{\mdtheorem[#1]}}{}
-}
-
-%%%%%%%%%%%%%%%%
-% Environments %
-%%%%%%%%%%%%%%%%
-
-\theoremstyle{plain}
-\newtheorem{theorem}{\lgtheorem}
-\newtheorem{lemma}[theorem]{\lglemma}
-\newtheorem{proposition}[theorem]{\lgproposition}
-
-\theoremstyle{definition}
-\newtheorem{definition}{\lgdefinition}
-\newtheorem{desc}{\lgdesc}
-\newtheorem{hypothesis}{\lghypothesis}
-\newtheorem{method}{\lgmethod}
-\newtheorem{problem}{\lgproblem}[section]
-\newtheorem{hint}{\lghint}
+\theoremstyle{definition-cm}
+\newtheorem{definition}[sectionctr]{\lgdefinition}\renewcommand*{\thedefinition}{\secalph{definition}}
+\newtheorem{desc}[sectionctr]{\lgdesc}\renewcommand*{\thedesc}{\secalph{desc}}
+\newtheorem{hypothesis}[sectionctr]{\lghypothesis}\renewcommand*{\thehypothesis}{\secalph{hypothesis}}
+\newtheorem{method}[sectionctr]{\lgmethod}\renewcommand*{\themethod}{\secalph{method}}
+\newtheorem{problem}[sectionctr]{\lgproblem}\renewcommand*{\theproblem}{\secalph{problem}}
+\newtheorem{hint}[sectionctr]{\lghint}\renewcommand*{\thehint}{\secalph{hint}}
 
 \let\proof\relax % overwrite proof environment
 \let\endproof\relax
 
-\theoremstyle{remark}
-\newtheorem{proof}{\lgproof}[theorem]
-\newtheorem{answer}{\lganswer}[problem]
-\newtheorem{example}{\lgexample}
+\theoremstyle{remark-cm}
+\newtheorem{proof}[sectionctr]{\lgproof}\renewcommand*{\theproof}{\secalph{proof}}
+\newtheorem{answer}[sectionctr]{\lganswer}\renewcommand*{\theanswer}{\secalph{answer}}
+\newtheorem{example}[sectionctr]{\lgexample}\renewcommand*{\theexample}{\secalph{example}}
 \newtheorem*{remark}{\lgremark}
 \newtheorem*{note}{\lgnote}
 \newtheorem*{tip}{\lgtip}
 
-%%%%%%%%%%%%%%%%%%%%%%%
-% Framed environments %
-%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Defines framed environments %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\mdfdefinestyle{thicc}{
-    innerleftmargin=0.5em,
-    innerrightmargin=0.5em,
-    innerbottommargin=1ex,
-    innertopmargin=1ex,
-    everyline=true,
-    linewidth=0.25em,
-    roundcorner=0.15em,
-    theoremseparator={.},
-    splittopskip=\baselineskip
+\newcommand\GenericTcb[4]{
+    \NewTcbTheorem[{#1},number format=\secalph]{#2}{\strut #3}{
+        arc=0.15em,          % Corner curve
+        bottom=1.5mm,        % Bottom margin
+        bottomtitle=0mm,     % Space below title
+        boxrule=0.25em,      % Border width apart from left side
+        breakable=true,      % Break boxes across pages
+        colback=white,       % Text color
+        colframe={#4},       % Frame color
+        coltitle=black,      % Title color
+        fonttitle=\bfseries, % Boldface title
+        left=1.5mm,          % Left margin
+        leftrule=0.25em,     % Left border width
+        right=1.5mm,         % Right margin
+        separator sign=,     % Separator between title and description
+        top=1.5mm,           % Top margin
+        toptitle=0mm,        % Space above title
+        before title app={%  % Counts number of problems in a section
+            \ifstrequal{#2}{fmd-problem}{\addtocounter{pblmctr}{1}}{}
+        }
+    }{tk}
 }
 
-\declaretheorem[mdthm={style=thicc, linecolor=black!20, frametitlebackgroundcolor=black!20}, sibling=desc, name=\lgdesc]{fmd-desc}
-\declaretheorem[mdthm={style=thicc, linecolor=brown!20, frametitlebackgroundcolor=brown!20}, sibling=definition, name=\lgdefinition]{fmd-definition}
-\declaretheorem[mdthm={style=thicc, linecolor=cyan!20, frametitlebackgroundcolor=cyan!20}, sibling=hint, name=\lghint]{fmd-hint}
+\GenericTcb{use counter=sectionctr}{fmd-desc}{\lgdesc}{black!20}
+\GenericTcb{use counter=sectionctr}{fmd-definition}{\lgdefinition}{brown!20}
+\GenericTcb{use counter=sectionctr}{fmd-hint}{\lghint}{cyan!20}
+\GenericTcb{use counter=sectionctr}{fmd-problem}{\lgproblem}{red!20}
+\GenericTcb{use counter=sectionctr}{fmd-theorem}{\lgtheorem}{blue!20}
+\GenericTcb{use counter=sectionctr}{fmd-lemma}{\lglemma}{blue!20}
+\GenericTcb{use counter=sectionctr}{fmd-hypothesis}{\lghypothesis}{orange!20}
+\GenericTcb{use counter=sectionctr}{fmd-proposition}{\lgproposition}{orange!20}
+\GenericTcb{use counter=sectionctr}{fmd-proof}{\lgproof}{black!20!green!20}
+\GenericTcb{use counter=sectionctr}{fmd-method}{\lgmethod}{black!20!green!20}
+\GenericTcb{use counter=sectionctr}{fmd-answer}{\lganswer}{black!20!green!20}
+\GenericTcb{use counter=sectionctr}{fmd-example}{\lgexample}{black!20!green!20}
 
-\declaretheorem[mdthm={style=thicc, linecolor=red!20, frametitlebackgroundcolor=red!20}, sibling=problem, name=\lgproblem]{fmd-problem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Matches numbering to problems %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\declaretheorem[mdthm={style=thicc, linecolor=blue!20, frametitlebackgroundcolor=blue!20}, sibling=theorem, name=\lgtheorem]{fmd-theorem}
-\declaretheorem[mdthm={style=thicc, linecolor=blue!20, frametitlebackgroundcolor=blue!20}, sibling=lemma, name=\lglemma]{fmd-lemma}
+\newcommand\LinkBefore[2]{\AtEndEnvironment{#1}{\addtocounter{#2}{-1}}}
+\newcommand\LinkAfter[2]{\AtBeginEnvironment{#1}{\addtocounter{#2}{-1}}}
 
-\declaretheorem[mdthm={style=thicc, linecolor=orange!20, frametitlebackgroundcolor=orange!20}, sibling=hypothesis, name=\lghypothesis]{fmd-hypothesis}
-\declaretheorem[mdthm={style=thicc, linecolor=orange!20, frametitlebackgroundcolor=orange!20}, sibling=proposition, name=\lgproposition]{fmd-proposition}
+\LinkBefore{desc}{sectionctr}
+\LinkBefore{definition}{sectionctr}
+\LinkBefore{theorem}{sectionctr}
+\LinkBefore{lemma}{sectionctr}
+\LinkBefore{fmd-desc}{sectionctr}
+\LinkBefore{fmd-definition}{sectionctr}
+\LinkBefore{fmd-theorem}{sectionctr}
+\LinkBefore{fmd-lemma}{sectionctr}
 
-\declaretheorem[mdthm={style=thicc, linecolor=black!20!green!20, frametitlebackgroundcolor=black!20!green!20}, sibling=proof, name=\lgproof]{fmd-proof}
-\declaretheorem[mdthm={style=thicc, linecolor=black!20!green!20, frametitlebackgroundcolor=black!20!green!20}, name=\lgmethod]{fmd-method}
-\declaretheorem[mdthm={style=thicc, linecolor=black!20!green!20, frametitlebackgroundcolor=black!20!green!20}, sibling=answer, name=\lganswer]{fmd-answer}
-\declaretheorem[mdthm={style=thicc, linecolor=black!20!green!20, frametitlebackgroundcolor=black!20!green!20}, sibling=example, name=\lgexample]{fmd-example}
-
-\endinput
+\LinkAfter{hint}{sectionctr}
+\LinkAfter{hypothesis}{sectionctr}
+\LinkAfter{proposition}{sectionctr}
+\LinkAfter{proof}{sectionctr}
+\LinkAfter{method}{sectionctr}
+\LinkAfter{answer}{sectionctr}
+\LinkAfter{example}{sectionctr}
+\LinkAfter{fmd-hint}{sectionctr}
+\LinkAfter{fmd-hypothesis}{sectionctr}
+\LinkAfter{fmd-proposition}{sectionctr}
+\LinkAfter{fmd-proof}{sectionctr}
+\LinkAfter{fmd-method}{sectionctr}
+\LinkAfter{fmd-answer}{sectionctr}
+\LinkAfter{fmd-example}{sectionctr}
