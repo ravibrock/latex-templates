@@ -22,8 +22,11 @@
     }
 }
 
-
-\newcommand\mychapter[1]{\section*{}\chapter{#1}} % Workaround to fix problem numbering
+\newcommand\mychapter[1]{ % Workaround to fix problem numbering
+    \ifnumequal{\value{chapter}}{0}
+    {\chapter{#1}}
+    {\section*{}\chapter{#1}}
+}
 
 %%%%%%%%%%%%%%%%%%%%%
 % Environment names %
