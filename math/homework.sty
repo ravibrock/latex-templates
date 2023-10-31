@@ -10,10 +10,13 @@
 \RequirePackage{amsmath,amssymb,amstext,amsthm}
 \RequirePackage{cntperchap}
 \RequirePackage{enumerate}
+\RequirePackage{linearb}
+\RequirePackage{listings}
 \RequirePackage{mathabx}
-\RequirePackage{titlesec}
 \RequirePackage{thmtools}
+\RequirePackage{titlesec}
 \RequirePackage{tocloft}
+\RequirePackage{parskip} % Must be loaded after tocloft
 \RequirePackage{xcolor}
 
 % Packages with options
@@ -30,6 +33,9 @@
 %%%%%%%%%%%%
 % Commands %
 %%%%%%%%%%%%
+
+% Enable Linear B variables for fun
+\newcommand\lb[1]{\scalebox{0.675}{\textlinb{#1}}}
 
 % Miscellaneous
 \newcommand{\ds}{\displaystyle}
