@@ -59,6 +59,14 @@
 \def\C{{\mathbb C}}
 \def\F{{\mathbb F}}
 
+% Fix spacing for \exists and \forall
+\let\oldexists\exists
+\let\oldforall\forall
+\let\exists\undefined
+\let\forall\undefined
+\DeclareMathOperator{\exists}{\oldexists}
+\DeclareMathOperator{\forall}{\oldforall}
+
 % Plaintext abbreviations in equations
 \def\id{{\rm id}}
 \def\im{{\rm im}}
