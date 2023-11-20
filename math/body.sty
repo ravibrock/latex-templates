@@ -28,6 +28,12 @@
     {\section*{}\chapter{#1}}
 }
 
+\newcommand\mysection[1]{ % Adds newpages before problems
+    \ifnumequal{\value{section}}{0}
+    {\section{#1}}
+    {\newpage\section{#1}}
+}
+
 %%%%%%%%%%%%%%%%%%%%%
 % Environment names %
 %%%%%%%%%%%%%%%%%%%%%
