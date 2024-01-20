@@ -42,6 +42,18 @@
 \newcommand{\ds}{\displaystyle}
 \renewcommand{\qedsymbol}{$\blacksquare$}
 
+% Update footnote styling
+\makeatletter
+\renewcommand\footnoterule{%
+    \kern-3\p@
+    \hrule\@width \textwidth
+    \kern2.6\p@
+}
+\makeatother
+\addtolength{\footnotesep}{2pt}
+\let\myfootnote\footnote
+\renewcommand\footnote[1]{\myfootnote{{#1}\vspace{-3pt}}}
+
 % Change imply arrow styling (optional)
 \renewcommand*{\implies}{\Rightarrow}
 \renewcommand*{\impliedby}{\Leftarrow}
@@ -100,6 +112,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%
 % Miscellaneous config %
 %%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\coloneqq{:=}
 
 \titleformat{\chapter}[display]
 {\bfseries\Huge} % format

@@ -37,22 +37,25 @@
 %%%%%%%%%%%%%%%%%%%%%
 % Environment names %
 %%%%%%%%%%%%%%%%%%%%%
+\newcommand{\CreateName}[1]{
+    \expandafter\def\csname lg#1\endcsname{\hspace{-1.6mm}\MakeUppercase #1}
+}
 
-\def\lgtheorem{Theorem}
-\def\lgproof{Proof}
-\def\lglemma{Lemma}
-\def\lgproposition{Proposition}
-\def\lgdefinition{Definition}
-\def\lgdesc{Description}
-\def\lghypothesis{Hypothesis}
-\def\lgmethod{Method}
-\def\lgproblem{Problem}
-\def\lganswer{Answer}
-\def\lgexample{Example}
-\def\lgremark{Remark}
-\def\lgnote{Note}
-\def\lgtip{Tip}
-\def\lghint{Hint}
+\CreateName{theorem}
+\CreateName{proof}
+\CreateName{lemma}
+\CreateName{proposition}
+\CreateName{definition}
+\CreateName{description}
+\CreateName{hypothesis}
+\CreateName{method}
+\CreateName{problem}
+\CreateName{answer}
+\CreateName{example}
+\CreateName{remark}
+\CreateName{note}
+\CreateName{tip}
+\CreateName{hint}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % Defines theorem styles %
@@ -99,7 +102,7 @@
 
 \theoremstyle{definition-cm}
 \newtheorem{definition}[sectionctr]{\lgdefinition}\renewcommand*{\thedefinition}{\secalph{definition}}
-\newtheorem{desc}[sectionctr]{\lgdesc}\renewcommand*{\thedesc}{\secalph{desc}}
+\newtheorem{desc}[sectionctr]{\lgdescription}\renewcommand*{\thedesc}{\secalph{desc}}
 \newtheorem{hypothesis}[sectionctr]{\lghypothesis}\renewcommand*{\thehypothesis}{\secalph{hypothesis}}
 \newtheorem{method}[sectionctr]{\lgmethod}\renewcommand*{\themethod}{\secalph{method}}
 \newtheorem{problem}[sectionctr]{\lgproblem}\renewcommand*{\theproblem}{\secalph{problem}}
@@ -144,7 +147,7 @@
     }{tk}
 }
 
-\GenericTcb{use counter=sectionctr}{fmd-desc}{\lgdesc}{black!20}
+\GenericTcb{use counter=sectionctr}{fmd-desc}{\lgdescription}{black!20}
 \GenericTcb{use counter=sectionctr}{fmd-definition}{\lgdefinition}{brown!20}
 \GenericTcb{use counter=sectionctr}{fmd-hint}{\lghint}{cyan!20}
 \GenericTcb{use counter=sectionctr}{fmd-problem}{\lgproblem}{red!20}
