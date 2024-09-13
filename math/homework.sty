@@ -1,12 +1,13 @@
 % Template for typesetting my math homework at UWaterloo
 % Based on https://github.com/francois-rozet/sleek-template, among other things
-\ProvidesPackage{homework}[2023/10/17 Ravi Brock's Homework]
+\ProvidesPackage{homework}[2024-09-03 Ravi Brock's Homework]
 
 %%%%%%%%%%%%%%%%%%%%
 % Sources packages %
 %%%%%%%%%%%%%%%%%%%%
 
 % Packages without options
+\RequirePackage{algorithmic}
 \RequirePackage{amsmath,amssymb,amstext,amsthm}
 \RequirePackage{cntperchap}
 \RequirePackage{enumerate}
@@ -14,18 +15,22 @@
 \RequirePackage{linearb}
 \RequirePackage{listings}
 \RequirePackage{mathabx}
+\RequirePackage{textcomp}
 \RequirePackage{thmtools}
 \RequirePackage{titlesec}
 \RequirePackage{tocloft}
 \RequirePackage{parskip} % Must be loaded after tocloft
+\RequirePackage{physics}
 \RequirePackage{xcolor}
 
 % Packages with options
-\RequirePackage[nomessages]{fp}
-\RequirePackage[margin=0.75in]{geometry}
 \RequirePackage[hidelinks]{hyperref}
-\RequirePackage[utf8]{inputenc}
+\RequirePackage[margin=0.75in]{geometry}
+\RequirePackage[T1]{fontenc}
 \RequirePackage[most]{tcolorbox}
+\RequirePackage[nomessages]{fp}
+\RequirePackage[vlined]{algorithm2e}
+\RequirePackage[utf8]{inputenc}
 
 % Custom packages
 \RequirePackage{body}
@@ -72,22 +77,31 @@
 \def\C{{\mathbb C}}
 \def\F{{\mathbb F}}
 
-% Fix spacing for \exists and \forall
+% Fix spacing for symbols we use as operators
 \let\oldexists\exists
 \let\oldforall\forall
+\let\oldtriangle\triangle
+\let\oldbackslash\backslash
 \let\exists\undefined
 \let\forall\undefined
+\let\triangle\undefined
+\let\backslash\undefined
 \DeclareMathOperator{\exists}{\oldexists}
 \DeclareMathOperator{\forall}{\oldforall}
+\DeclareMathOperator{\triangle}{\oldtriangle}
+\DeclareMathOperator{\backslash}{\oldbackslash}
 
 % Plaintext abbreviations in equations
 \def\Aut{\textrm{Aut}}
-\def\char{\textrm{char}}
 \def\dim{\textrm{dim}}
 \def\ev{\textrm{ev}}
 \def\id{\textrm{id}}
 \def\im{\textrm{im}}
 \def\lcm{\textrm{lcm}}
+
+% Use nicer cup/cap symbols (otherwise overridden by mathabx)
+\DeclareMathSymbol{\cup}{\mathbin}{symbols}{"5B}
+\DeclareMathSymbol{\cap}{\mathbin}{symbols}{"5C}
 
 %%%%%%%%%%%%%%%%%%%%%
 % Table of contents %
@@ -127,8 +141,27 @@
 \titlespacing*{\chapter}
 {0pt}{-30pt}{30pt}
 
+\titleformat{\section}{\normalfont\Large\bfseries}{Problem \thesection}{1em}{}
+
 % Break equations across pages
 \allowdisplaybreaks
 
-% Adjusts section styling
+% Adjusts section and equation styling
 \renewcommand*{\thesection}{\arabic{section}}
+\renewcommand*{\theequation}{\arabic{equation}}
+
+% Code insets
+\lstset{
+    aboveskip=3mm,
+    basicstyle=\tt\footnotesize,
+    belowskip=3mm,
+    breakatwhitespace=true,
+    breaklines=true,
+    columns=flexible,
+    frame=tb,
+    numbers=none,
+    numberstyle=\tiny\color{gray},
+    showstringspaces=false,
+    tabsize=4,
+    upquote=true,
+}

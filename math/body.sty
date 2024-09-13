@@ -40,6 +40,8 @@
 \newcommand{\CreateName}[1]{
     \expandafter\def\csname lg#1\endcsname{\hspace{-1.6mm}\MakeUppercase #1}
 }
+% Special case `algorithm` because of namespace conflicts
+\expandafter\def\csname lgalgo\endcsname{\hspace{-1.6mm}\MakeUppercase algorithm}
 
 \CreateName{theorem}
 \CreateName{proof}
@@ -113,6 +115,7 @@
 
 \theoremstyle{remark-cm}
 \newtheorem{proof}[sectionctr]{\lgproof}\renewcommand*{\theproof}{\secalph{proof}}
+\newtheorem{algo}[sectionctr]{\lgalgo}\renewcommand*{\thealgo}{\secalph{algo}}
 \newtheorem{answer}[sectionctr]{\lganswer}\renewcommand*{\theanswer}{\secalph{answer}}
 \newtheorem{example}[sectionctr]{\lgexample}\renewcommand*{\theexample}{\secalph{example}}
 \newtheorem*{remark}{\lgremark}
@@ -123,7 +126,7 @@
 % Defines framed environments %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand\GenericTcb[4]{
+\newcommand\GenericTcb[6]{
     \NewTcbTheorem[{#1},number format=\secalph]{#2}{\strut #3}{
         arc=0.15em,          % Corner curve
         bottom=1.5mm,        % Bottom margin
@@ -141,52 +144,57 @@
         separator sign=,     % Separator between title and description
         top=1.5mm,           % Top margin
         toptitle=0mm,        % Space above title
+        before upper app={#5},
+        after upper pre={#6},
         before title app={%  % Counts number of problems in a section
             \ifstrequal{#2}{fmd-problem}{\addtocounter{pblmctr}{1}}{}
         }
     }{tk}
 }
 
-\GenericTcb{use counter=sectionctr}{fmd-desc}{\lgdescription}{black!20}
-\GenericTcb{use counter=sectionctr}{fmd-definition}{\lgdefinition}{brown!20}
-\GenericTcb{use counter=sectionctr}{fmd-hint}{\lghint}{cyan!20}
-\GenericTcb{use counter=sectionctr}{fmd-problem}{\lgproblem}{red!20}
-\GenericTcb{use counter=sectionctr}{fmd-theorem}{\lgtheorem}{blue!20}
-\GenericTcb{use counter=sectionctr}{fmd-lemma}{\lglemma}{blue!20}
-\GenericTcb{use counter=sectionctr}{fmd-hypothesis}{\lghypothesis}{orange!20}
-\GenericTcb{use counter=sectionctr}{fmd-proposition}{\lgproposition}{orange!20}
-\GenericTcb{use counter=sectionctr}{fmd-proof}{\lgproof}{black!20!green!20}
-\GenericTcb{use counter=sectionctr}{fmd-method}{\lgmethod}{black!20!green!20}
-\GenericTcb{use counter=sectionctr}{fmd-answer}{\lganswer}{black!20!green!20}
-\GenericTcb{use counter=sectionctr}{fmd-example}{\lgexample}{black!20!green!20}
+\GenericTcb{use counter=sectionctr}{fmd-desc}{\lgdescription}{black!20}{}{}
+\GenericTcb{use counter=sectionctr}{fmd-definition}{\lgdefinition}{brown!20}{}{}
+\GenericTcb{use counter=sectionctr}{fmd-hint}{\lghint}{cyan!20}{}{}
+\GenericTcb{use counter=sectionctr}{fmd-problem}{\lgproblem}{red!20}{}{}
+\GenericTcb{use counter=sectionctr}{fmd-theorem}{\lgtheorem}{blue!20}{}{}
+\GenericTcb{use counter=sectionctr}{fmd-lemma}{\lglemma}{blue!20}{}{}
+\GenericTcb{use counter=sectionctr}{fmd-hypothesis}{\lghypothesis}{orange!20}{}{}
+\GenericTcb{use counter=sectionctr}{fmd-proposition}{\lgproposition}{orange!20}{}{}
+\GenericTcb{use counter=sectionctr}{fmd-proof}{\lgproof}{black!20!green!20}{}{}
+\GenericTcb{use counter=sectionctr}{fmd-algo}{\lgalgo}{black!20!green!20}{\begin{algorithm}
+[H]}{\end{algorithm}}
+\GenericTcb{use counter=sectionctr}{fmd-method}{\lgmethod}{black!20!green!20}{}{}
+\GenericTcb{use counter=sectionctr}{fmd-answer}{\lganswer}{black!20!green!20}{}{}
+\GenericTcb{use counter=sectionctr}{fmd-example}{\lgexample}{black!20!green!20}{}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Matches numbering to problems %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand\LinkBefore[2]{\AtEndEnvironment{#1}{\addtocounter{#2}{-1}}}
-\newcommand\LinkAfter[2]{\AtBeginEnvironment{#1}{\addtocounter{#2}{-1}}}
+\newcommand\LinkBefore[1]{\AtEndEnvironment{#1}{\addtocounter{sectionctr}{-1}}}
+\newcommand\LinkAfter[1]{\AtBeginEnvironment{#1}{\addtocounter{sectionctr}{-1}}}
 
-\LinkBefore{desc}{sectionctr}
-\LinkBefore{definition}{sectionctr}
-\LinkBefore{theorem}{sectionctr}
-\LinkBefore{lemma}{sectionctr}
-\LinkBefore{fmd-desc}{sectionctr}
-\LinkBefore{fmd-definition}{sectionctr}
-\LinkBefore{fmd-theorem}{sectionctr}
-\LinkBefore{fmd-lemma}{sectionctr}
+\LinkBefore{desc}
+\LinkBefore{definition}
+\LinkBefore{theorem}
+\LinkBefore{lemma}
+\LinkBefore{fmd-desc}
+\LinkBefore{fmd-definition}
+\LinkBefore{fmd-theorem}
+\LinkBefore{fmd-lemma}
 
-\LinkAfter{hint}{sectionctr}
-\LinkAfter{hypothesis}{sectionctr}
-\LinkAfter{proposition}{sectionctr}
-\LinkAfter{proof}{sectionctr}
-\LinkAfter{method}{sectionctr}
-\LinkAfter{answer}{sectionctr}
-\LinkAfter{example}{sectionctr}
-\LinkAfter{fmd-hint}{sectionctr}
-\LinkAfter{fmd-hypothesis}{sectionctr}
-\LinkAfter{fmd-proposition}{sectionctr}
-\LinkAfter{fmd-proof}{sectionctr}
-\LinkAfter{fmd-method}{sectionctr}
-\LinkAfter{fmd-answer}{sectionctr}
-\LinkAfter{fmd-example}{sectionctr}
+\LinkAfter{hint}
+\LinkAfter{hypothesis}
+\LinkAfter{proposition}
+\LinkAfter{proof}
+\LinkAfter{method}
+\LinkAfter{answer}
+\LinkAfter{example}
+\LinkAfter{fmd-hint}
+\LinkAfter{fmd-hypothesis}
+\LinkAfter{fmd-proposition}
+\LinkAfter{fmd-proof}
+\LinkAfter{fmd-method}
+\LinkAfter{fmd-answer}
+\LinkAfter{fmd-example}
+\LinkAfter{fmd-algo}
