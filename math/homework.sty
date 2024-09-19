@@ -69,6 +69,11 @@
 \newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
 \renewcommand{\lg}[2]{\displaystyle\Big(\frac{#1}{#2}\Big)} % Legendre/Jacobi symbols
 
+% Make \qed work in align enviroments etc.
+\let\tempqed\qed
+\let\qed\undefined
+\newcommand{\qed}{\pushQED{\tempqed}\qedhere\popQED}
+
 % Blackboard bold
 \def\R{{\mathbb R}}
 \def\Z{{\mathbb Z}}
