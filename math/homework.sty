@@ -92,14 +92,17 @@
 
 % Fix spacing for symbols we use as operators
 \let\oldexists\exists
+\let\oldnexists\nexists
 \let\oldforall\forall
 \let\oldtriangle\triangle
 \let\oldbackslash\backslash
 \let\exists\undefined
+\let\nexists\undefined
 \let\forall\undefined
 \let\triangle\undefined
 \let\backslash\undefined
 \DeclareMathOperator{\exists}{\oldexists}
+\DeclareMathOperator{\nexists}{\oldnexists}
 \DeclareMathOperator{\forall}{\oldforall}
 \DeclareMathOperator{\triangle}{\oldtriangle}
 \DeclareMathOperator{\backslash}{\oldbackslash}
