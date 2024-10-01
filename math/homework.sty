@@ -16,7 +16,6 @@
 \RequirePackage{linearb}
 \RequirePackage{listings}
 \RequirePackage{lmodern}
-\RequirePackage{minted}
 \RequirePackage{textcomp}
 \RequirePackage{thmtools}
 \RequirePackage{titlesec}
@@ -26,6 +25,7 @@
 \RequirePackage{xcolor}
 
 % Packages with options
+\RequirePackage[cachedir=./.minted]{minted}
 \RequirePackage[hidelinks]{hyperref}
 \RequirePackage[margin=0.75in]{geometry}
 \RequirePackage[T1]{fontenc}
@@ -165,12 +165,11 @@
 
 % Code insets
 \setminted{
+    baselinestretch=1.05,
+    bgcolor=white, % needed to fix spacing before/after
+    fontsize=\footnotesize,
     frame=lines,
     framesep=2mm,
-    baselinestretch=1.2,
-    fontsize=\footnotesize,
-    baselinestretch=1,
-    bgcolor=white, % needed to fix spacing before/after
 }
 \makeatletter
 \patchcmd{\minted@colorbg}{\medskip}{\vspace*{-1mm}}{}{}
