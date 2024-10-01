@@ -15,7 +15,6 @@
 \RequirePackage{graphicx}
 \RequirePackage{linearb}
 \RequirePackage{listings}
-\RequirePackage{mathabx}
 \RequirePackage{textcomp}
 \RequirePackage{thmtools}
 \RequirePackage{titlesec}
@@ -47,6 +46,12 @@
 % Miscellaneous
 \newcommand{\ds}{\displaystyle}
 \renewcommand{\qedsymbol}{$\blacksquare$}
+
+% Change slash styling for inequalities
+\renewcommand{\le}{\leqslant}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\ge}{\geqslant}
+\renewcommand{\geq}{\geqslant}
 
 % Update footnote styling
 \makeatletter
